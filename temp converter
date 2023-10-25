@@ -1,1 +1,149 @@
+<!doctype html>
+<html> 
+ <head> 
+  <meta name="viewport" content="width=device-width, initial_scale=1.0"> 
+  <title>Temperature_Converter</title> 
+ </head> 
+ <body> 
+  <h1 class="title">Temperature Converter</h1> 
+  <div class="units"> 
+   <div class="panel" id="celsius"> 
+    <h1 class="bg-unit">C</h1> 
+    <h2>Celsius</h2> 
+    <input type="number" value="0"> 
+   </div> 
+   <div class="panel" id="fahrenheit"> 
+    <h1 class="bg-unit">F</h1> 
+    <h2>Fahrenheit</h2> 
+    <input type="number" value="32"> 
+   </div> 
+   <div class="panel" id="kelvin"> 
+    <h1 class="bg-unit">K</h1> 
+    <h2>Kelvin</h2> 
+    <input type="number" value="273.15"> 
+   </div> 
+  </div> 
+ </body>
+</html>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#111;
+  text-align:center;
+  padding:2em;
+  color:white;
+}
 
+.title{
+  font-size:3em;
+  margin-bottom:2em;
+  color:white;
+}
+
+.units{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:1em;
+  flex-wrap:wrap;
+  
+}
+
+.panel{
+  border-radius:10px;
+  min-width:15em;
+  height:15em;
+  position:relative;
+}
+
+.panel:nth-child(1){
+  background:red;
+}
+
+.panel:nth-child(2){
+  background:lightgreen;
+}
+
+.panel:nth-child(3){
+  background:blue;
+}
+
+.bg-unit{
+  margin:0;
+  position:absolute;
+  top:50%;
+  left:50%;
+  font-size:10em;
+  transform:translate(-50%,-50%);
+  z-index:0;
+  pointer-events:none;
+}
+
+.panel:nth-child(1) .bg-unit{
+  color:#ff4b4b;
+}
+
+.panel:nth-child(2) .bg-unit{
+  color:#7ffc4e;
+}
+
+.panel:nth-child(3) .bg-unit{
+  color:#537eff;
+}
+
+.panel h2, .panel input{
+  position:relative;
+}
+
+.panel h2{
+  text-align:left;
+  padding-left:1em;
+}
+
+.panel input{
+  border:none;
+  background:none;
+  margin-top:.5em;
+  width:4em;
+  height:2em;
+  font-size:3em;
+  font-weight:690;
+  text-align:center;
+  color:#fff;
+}
+
+.panel input:focus{
+  outline:none;
+}
+let c = document.querySelector("#celsius > input");
+let f = document.querySelector("#fahrenheit > input");
+let k = document.querySelector("#kelvin > input");
+
+
+function roundNumber(number){
+  return Math.round(number*100)/100
+}
+c.addEventListener('input',function(){
+  let cTemp= parseFloat(c.value)
+  let fTemp= (cTemp*(9/5)) +32
+  let kTemp= cTemp + 273.15
+  
+  f.value = roundNumber(fTemp)
+  k.value = roundNumber(kTemp)
+})
+f.addEventListener('input',function(){
+  let fTemp= parseFloat(f.value)
+  let cTemp= (fTemp - 32) * 5/9
+  let kTemp= cTemp + 273.15
+  
+  c.value = roundNumber(cTemp)
+  k.value = roundNumber(kTemp)
+})
+k.addEventListener('input',function(){
+  let kTemp= parseFloat(k.value)
+  let cTemp= kTemp - 273.15
+  let fTemp= (cTemp*(9/5)) +32
+  
+  c.value = roundNumber(cTemp)
+  f.value = roundNumber(fTemp)
+})
